@@ -115,12 +115,12 @@ with mlflow.start_run(run_name="Logistic_Regression"):
     mlflow.log_figure(plt.gcf(), "roc_curve.png")
     plt.close()
     
-# Сохраняем обученную модель
-mlflow.sklearn.log_model(
-    sk_model=model,
-    name="credit_default_model",
-    serialization_format="cloudpickle"
-)
+    # Сохраняем обученную модель
+    mlflow.sklearn.log_model(
+        sk_model=model,
+        name="credit_default_model",
+        serialization_format="cloudpickle"
+    )
     
 
 
