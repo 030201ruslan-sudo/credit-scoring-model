@@ -1,26 +1,19 @@
+import joblib
 import pandas as pd
-import mlflow
-import mlflow.sklearn
 
-# Подключаемся к MLflow
-mlflow.set_tracking_uri("sqlite:///mlflow.db")
-
-# Загружаем сохранённую модель
-model = mlflow.sklearn.load_model(
-    "models:/m-40e2f659a8c34cfca83bd72f57c19dfe"
-)
+# Загружаем модель из DVC
+model = joblib.load("models/credit_model.pkl")
 
 # Загружаем данные
 df = pd.read_csv("data/raw/UCI_Credit_Card.csv")
 
-# Отделяем признаки
+# Берём первого клиента
 X = df.drop(columns=["ID", "default.payment.next.month"])
+client = X.iloc[[0]]
 
-X = df.drop(columns=["ID", "default.payment.next.month"])
+# Получаем прогноз
+prediction = model.predict(client)
+probability = model.predict_proba(client)
 
-# Получаем прогноз для первого клиента
-prediction = model.predict(X.head(1))
-probability = model.predict_proba(X.head(1))[:, 1]
-
-print("Предсказанный класс:", prediction[0])
-print("Вероятность дефолта:", round(probability[0], 4))
+print("Прогноз:", prediction[0])
+print("Вероятность дефолта:", probability[0][1])
