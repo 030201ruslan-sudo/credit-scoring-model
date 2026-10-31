@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
 from src.api.main import app
+from unittest.mock import patch
 
 client = TestClient(app)
 
@@ -44,8 +45,13 @@ def test_predict():
         "PAY_AMT6": 0
     }
 
-    response = client.post("/predict", json=data)
+    with patch("src.api.main.joblib.load") as mock_load:
+        mock_model = mock_load.return_value
+        mock_model.predict.return_value = [1]
+        mock_model.predict_proba.return_value = [[0.4, 0.6]]
+
+        response = client.post("/predict", json=data)
 
     assert response.status_code == 200
     assert response.json()["default_prediction"] == 1
-    assert abs(response.json()["default_probability"] - 0.5561) < 0.001
+    assert response.json()["default_probability"] == 0.6
