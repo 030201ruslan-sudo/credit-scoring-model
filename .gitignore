@@ -1,0 +1,23 @@
+# Виртуальное окружение
+.venv/
+
+# Временные файлы Python
+__pycache__/
+*.pyc
+
+# Настройки VS Code
+.vscode/
+
+# Временные файлы macOS
+.DS_Store
+
+# Данные
+data/raw/
+data/processed/
+
+# Обученные модели
+*.pkl
+
+# Локальные результаты MLflow
+mlruns/
+mlartifacts/
