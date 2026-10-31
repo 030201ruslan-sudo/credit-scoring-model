@@ -21,3 +21,6 @@ data/processed/
 # Локальные результаты MLflow
 mlruns/
 mlartifacts/
+
+# Временные файлы pytest
+.pytest_cache/
