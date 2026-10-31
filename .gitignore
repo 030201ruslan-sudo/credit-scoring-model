@@ -12,7 +12,7 @@ __pycache__/
 .DS_Store
 
 # Данные
-data/raw/
+data/raw/*.csv
 data/processed/
 
 # Обученные модели
@@ -24,3 +24,6 @@ mlartifacts/
 
 # Временные файлы pytest
 .pytest_cache/
+
+# Локальная база MLflow
+mlflow.db
