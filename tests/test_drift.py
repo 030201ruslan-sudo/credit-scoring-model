@@ -1,5 +1,5 @@
 from scipy.stats import ks_2samp
-from src.monitoring.drift import calculate_psi
+from src.monitoring.psi import calculate_psi
 
 # Проверяем одинаковые данные
 def test_no_drift():
