@@ -1,5 +1,0 @@
-outs:
-- md5: ebe0326b285afbf740bd22007efccbbe
-  size: 5361
-  hash: md5
-  path: credit_model.pkl

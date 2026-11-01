@@ -1,6 +1,6 @@
 import joblib
 import pandas as pd
-from sklearn.model_selection import train_test_split
+
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
@@ -19,20 +19,17 @@ from sklearn.preprocessing import FunctionTransformer
 mlflow.set_tracking_uri("sqlite:///mlflow.db")
 mlflow.set_experiment("Credit_Default_Prediction")
 
-# Загружаем данные
-df = pd.read_csv("data/raw/UCI_Credit_Card.csv")
 
-# Отделяем признаки от целевой переменной
-X = df.drop(columns=["ID", "default.payment.next.month"])
-y = df["default.payment.next.month"]
+# Загружаем подготовленные данные
+train = pd.read_csv("data/processed/train.csv")
+test = pd.read_csv("data/processed/test.csv")
 
-# Разделяем данные
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y,
-    test_size=0.2,
-    random_state=42,
-    stratify=y
-)
+# Отделяем признаки и целевую переменную
+X_train = train.drop(columns=["ID", "default.payment.next.month"])
+y_train = train["default.payment.next.month"]
+
+X_test = test.drop(columns=["ID", "default.payment.next.month"])
+y_test = test["default.payment.next.month"]
 
 print("Обучающая выборка:", X_train.shape)
 print("Тестовая выборка:", X_test.shape)
