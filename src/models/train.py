@@ -69,6 +69,17 @@ grid_search = GridSearchCV(
 
 grid_search.fit(X_train, y_train)
 
+# Сохраняем результаты подбора параметров в MLflow
+for i in range(len(grid_search.cv_results_["params"])):
+    c = grid_search.cv_results_["params"][i]["classifier__C"]
+    score = grid_search.cv_results_["mean_test_score"][i]
+
+    with mlflow.start_run(run_name=f"Logistic_Regression_C_{c}"):
+        mlflow.log_param("model", "LogisticRegression")
+        mlflow.log_param("C", c)
+        mlflow.log_param("cv", 3)
+        mlflow.log_metric("cv_roc_auc", score)
+
 # Используем лучшую модель
 model = grid_search.best_estimator_
 
