@@ -1,5 +1,5 @@
 from scipy.stats import ks_2samp
-
+from src.monitoring.drift import calculate_psi
 
 # Проверяем одинаковые данные
 def test_no_drift():
@@ -10,7 +10,6 @@ def test_no_drift():
 
     assert p_value >= 0.05
 
-
 # Проверяем разные распределения
 def test_drift():
     reference = list(range(20, 120))
@@ -19,4 +18,23 @@ def test_drift():
     statistic, p_value = ks_2samp(reference, current)
 
     assert p_value < 0.05
+    
+# Проверяем PSI для одинаковых данных
+def test_psi_no_drift():
+    reference = list(range(1, 101))
+    current = list(range(1, 101))
+
+    psi = calculate_psi(reference, current)
+
+    assert abs(psi) < 0.0001
+
+
+# Проверяем PSI для разных данных
+def test_psi_drift():
+    reference = list(range(1, 101))
+    current = list(range(101, 201))
+
+    psi = calculate_psi(reference, current)
+
+    assert psi > 0.1
 
