@@ -72,6 +72,37 @@ dvc pull
 
 `Everything is up to date.`
 
+
+### Хранилище DVC
+
+Датасет и обученная модель хранятся в Google Drive
+под управлением DVC.
+
+Ссылка на хранилище:
+
+[Google Drive - Credit Scoring DVC](https://drive.google.com/drive/folders/1ff9pe5MsmWjMgkNag1l153Vo81lvBEmx?usp=sharing)
+
+Для получения файлов выполните:
+
+```bash
+dvc pull
+```
+
+DVC восстанавливает:
+- `data/raw/UCI_Credit_Card.csv`
+- `data/processed/train.csv`
+- `data/processed/test.csv`
+- `models/credit_model.pkl`
+
+Для выполнения `dvc pull` необходим доступ
+к папке Google Drive и настроенная OAuth-авторизация.
+
+Если настроить авторизацию DVC не удаётся,
+исходный датасет можно получить из UCI Machine
+Learning Repository, а модель обучить самостоятельно
+командой `dvc repro` после загрузки исходных данных.
+
+
 ### 3. Проверка данных
 
 ```bash
